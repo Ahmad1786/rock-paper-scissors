@@ -40,7 +40,7 @@ function game() {
         const userChoice = prompt("Chose either Rock, Paper, or Scissor", "Rock");
         const computerSelection = getComputerChoice();
 
-        roundStatement = playRound(userChoice, computerSelection);
+        let roundStatement = playRound(userChoice, computerSelection);
         if (roundStatement[4] === 'W') {
            playerScore++; 
         }
