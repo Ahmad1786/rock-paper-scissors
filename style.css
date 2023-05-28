@@ -1,0 +1,62 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.game {
+    text-align: center;
+    width: 80%;
+}
+
+.score {
+    font-size: 2em;
+    color: purple;
+    margin-bottom: 1em;
+}
+
+.round {
+    display: flex;
+    justify-content: space-around;
+}
+
+.player, .computer {
+    width: 40%;
+}
+
+.choice {
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.choice:hover {
+    background-color: #a020f0;
+}
+.no-hover:hover {
+    background-color: purple;
+}
+
+.announcement {
+    font-size: 1.5em;
+    margin-bottom: 2em;
+    color: #a020f0;
+}
+
+#computer-choice {
+    font-size: 1.2em;
+    margin-top: 2em;
+    color: #a020f0;
+}

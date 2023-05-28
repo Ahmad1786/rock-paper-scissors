@@ -1,11 +1,19 @@
-const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-function pointsGrammar(points) {
-    if (points === 1) {
-        return "point"
-    }
-    else {
-        return "points"
-    }
+let currentPlayerScore = 0;
+let currentComputerScore = 0;
+
+const myButtons = document.querySelectorAll('.choice');
+myButtons.forEach(
+    b => b.addEventListener('click', (e) => playRound(e.target.id, getComputerChoice()))
+);
+
+const currentComputerChoice = document.querySelector('#computer-choice');
+const playerScoreDisp = document.querySelector('#player-score');
+const compScoreDisp = document.querySelector('#computer-score');
+const roundString = document.querySelector('#current-round-result')
+
+function updateScore() {
+    compScoreDisp.textContent = currentComputerScore;
+    playerScoreDisp.textContent = currentPlayerScore;
 }
 
 function getComputerChoice() {
@@ -14,47 +22,62 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = capitalizeFirstLetter(playerSelection);
-    if  (playerSelection === computerSelection) {
-        return `It's a tie! You both chose ${playerSelection}`
+    currentComputerChoice.textContent = `Computer's Choice: ${computerSelection}`
+    if (playerSelection === computerSelection) {
+        roundString.textContent = 'It\'s a Tie';
     }
     else {
         if (playerSelection === 'Rock') {
-            return (computerSelection === 'Scissor') ? 'You Win! Rock beats Scissor' : 'You Lose! Paper beats Rock'
+            if (computerSelection === 'Scissor') {
+                roundString.textContent = 'You take the Round!';
+                currentPlayerScore += 1;
+
+            } else {
+                roundString.textContent = 'Computer wins this one';
+                currentComputerScore += 1;
+            }
         }
         else if (playerSelection === 'Paper') {
-            return (computerSelection === 'Rock') ? 'You Win! Paper beats Rock' : 'You Lose! Scissor beats Paper'
+            if (computerSelection === 'Rock') {
+                roundString.textContent = 'You take the Round!';
+                currentPlayerScore += 1;
+            } else {
+               roundString.textContent = 'Computer wins this one';
+               currentComputerScore += 1;
+            }
         }
         else { //player chose scissor
-            return (computerSelection === 'Paper') ? 'You Win! Scissor beats Paper' : 'You Lose! Rock beats Scissor'
+            if (computerSelection === 'Paper') {
+                roundString.textContent = 'You take the Round!';
+                currentPlayerScore += 1;
+            } else {
+                roundString.textContent = 'Computer wins this one';
+                currentComputerScore += 1;
+            }
         }
+    }
+    updateScore();
+    checkForWinner();
+}
+function checkForWinner() {
+    if (currentPlayerScore === 5 || currentComputerScore === 5) {
+        alert(currentComputerScore > currentPlayerScore ? 'Computer Wins :(': 'You win! Congrats!');
+    
+        myButtons.forEach(
+            b => b.disabled = true
+        );
+        roundString.textContent = "Reload page to start a new game"
     }
 }
-
-function game() {
-    const numRounds = prompt("How many rounds would you like to play?", "3");
-    let playerScore = 0;
-    let computerScore = 0;
-    let finalResult = "";
-    for (let i = 1; i <= +numRounds; i++) {
-        const userChoice = prompt("Chose either Rock, Paper, or Scissor", "Rock");
-        const computerSelection = getComputerChoice();
-
-        let roundStatement = playRound(userChoice, computerSelection);
-        if (roundStatement[4] === 'W') {
-           playerScore++; 
-        }
-        else if (roundStatement[4] === 'L') {
-            computerScore++;
-        }
-        console.log(roundStatement);
+function checkForWinner() {
+    if (currentPlayerScore === 5 || currentComputerScore === 5) {
+        setTimeout(() => {
+            alert(currentComputerScore > currentPlayerScore ? 'Computer Wins :(' : 'You win! Congrats!');
+            myButtons.forEach(b => {
+                b.disabled = true;
+                b.classList.add('no-hover');
+            })   
+            roundString.textContent = "Reload page to start a new game";
+        }, 0);
     }
-    if (playerScore === computerScore) {
-        finalResult = "The Game was a Tie!";
-    }
-    else {
-        finalResult = (playerScore > computerScore) ? "You Win!" : "Computer Wins.";
-    }
-    console.log(`You Scored ${playerScore} ${pointsGrammar(playerScore)}. Computer Scored ${computerScore} ${pointsGrammar(computerScore)}. ${finalResult}`);
 }
-game();
