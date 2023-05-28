@@ -1,3 +1,2 @@
 # rock-paper-scissors
-Basic version of Rock Paper Scissors Game.
-Will revist to make it with a nice frontend
+Rock Paper Scissors Game with decent looking Black and Purple UI.
